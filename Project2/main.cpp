@@ -33,7 +33,7 @@ int main(void)
 	glMatrixMode(GL_MODELVIEW); // (default matrix mode) modelview matrix defines how your objects are transformed (meaning translation, rotation and scaling) in your world
 	glLoadIdentity(); // same as above comment
 
-	GLfloat polygonVertices[] =
+	GLfloat mountainVertices[] =
 	{
 		0, 200, 0,
 		106, 320, 0,
@@ -56,11 +56,78 @@ int main(void)
 		480, 200, 0,
 		640, 200, 0,
 	};
-	GLfloat polygonVertices2[] =
+	GLfloat roadVertices[] =
 	{
-		0, 0, 0,
-		106, 120, 0,
-		160, 0, 0,
+		320, 200, 0,
+		200, 0, 0,
+		340, 0, 0,
+	};
+	 
+	GLfloat woodVertices[] =
+	{
+		530,0,0,
+		512,60,0,
+		520,80,0,
+		440,100,0,
+		460,105,0,
+		520,80,0,
+		520,80,0,
+		600,105,0,
+		605,100,0,
+		540,65,0,
+		520,80,0,
+		560,0,0,
+		530,0,0
+	};
+
+	GLfloat leftleafVertices[] =
+	{
+		440,80,0,
+		420,60,0,
+		440,150,0,
+		400,80,0,
+		370,70,0,
+		440,150,0,
+		380,75,0,
+		360,90,0,
+		440,150,0,
+		370,100,0,
+		350,120,0,
+		440,150,0,
+		380,130,0,
+		370,160,0,
+		440,150,0,
+		390,150,0,
+		420,170,0,
+		440,150,0,
+		440,160,0,
+		490,190,0, //20
+		440,150,0,
+		475,170,0,
+		500,150,0,
+		440,150,0,
+		470,130,0,
+		480,120,0,
+		440,150,0,
+		490,100,0,
+		470,80,0,
+		440,150,0, //30
+		440,80,0,
+	};
+
+	GLfloat rightleafVertices[] =
+	{
+		580,105,0,
+		620,160,0,
+		630,120,0,
+		640,150,0,
+		640,80,0,
+		630,120,0,
+		620,90,0,
+		600,70,0,
+		630,120,0,
+		600,105,0, //10
+		580,105,0
 	};
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -72,10 +139,16 @@ int main(void)
 
 		// render OpenGL here
 		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 0, polygonVertices);
+		glVertexPointer(3, GL_FLOAT, 0, mountainVertices);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 20);
-		glVertexPointer(3, GL_FLOAT, 0, polygonVertices2);
+		glVertexPointer(3, GL_FLOAT, 0, roadVertices);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+		glVertexPointer(3, GL_FLOAT, 0, woodVertices);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 13);
+		glVertexPointer(3, GL_FLOAT, 0, leftleafVertices);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 31);
+		glVertexPointer(3, GL_FLOAT, 0, rightleafVertices);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 11);
 		glDisableClientState(GL_VERTEX_ARRAY);
 
 		// Swap front and back buffers
