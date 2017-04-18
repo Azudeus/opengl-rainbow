@@ -1,37 +1,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <math.h>
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
-int main(void)
-{
-	GLFWwindow *window;
-
-	// Initialize the library
-	if (!glfwInit())
-	{
-		return -1;
-	}
-
-	// Create a windowed mode window and its OpenGL context
-	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World", NULL, NULL);
-
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-
-	// Make the window's context current
-	glfwMakeContextCurrent(window);
-
-	glViewport(0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT); // specifies the part of the window to which OpenGL will draw (in pixels), convert from normalised to pixels
-	glMatrixMode(GL_PROJECTION); // projection matrix defines the properties of the camera that views the objects in the world coordinate frame. Here you typically set the zoom factor, aspect ratio and the near and far clipping planes
-	glLoadIdentity(); // replace the current matrix with the identity matrix and starts us a fresh because matrix transforms such as glOrpho and glRotate cumulate, basically puts us at (0, 0, 0)
-	glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1); // essentially set coordinate system
-	glMatrixMode(GL_MODELVIEW); // (default matrix mode) modelview matrix defines how your objects are transformed (meaning translation, rotation and scaling) in your world
-	glLoadIdentity(); // same as above comment
+void drawMountain() {
+	glColor3f(0, 0.796875f, 0.59765625f);
 
 	GLfloat mountainVertices[] =
 	{
@@ -56,13 +31,28 @@ int main(void)
 		480, 200, 0,
 		640, 200, 0,
 	};
+	glVertexPointer(3, GL_FLOAT, 0, mountainVertices);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 20);
+
+}
+
+void drawRoad() {
+	glColor3f(0.3984375f, 0.3984375f, 0.59765625f);
+
 	GLfloat roadVertices[] =
 	{
 		320, 200, 0,
 		200, 0, 0,
 		340, 0, 0,
 	};
-	 
+	glVertexPointer(3, GL_FLOAT, 0, roadVertices);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+
+}
+
+void drawWood() {
+	glColor3f(0.3984375f, 0.1992f, 0);
+
 	GLfloat woodVertices[] =
 	{
 		530,0,0,
@@ -79,7 +69,12 @@ int main(void)
 		560,0,0,
 		530,0,0
 	};
+	glVertexPointer(3, GL_FLOAT, 0, woodVertices);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 13);
+}
 
+void drawLeaf() {
+	glColor3f(0, 0.796875f, 0);
 	GLfloat leftleafVertices[] =
 	{
 		440,80,0,
@@ -130,6 +125,66 @@ int main(void)
 		580,105,0
 	};
 
+	glVertexPointer(3, GL_FLOAT, 0, leftleafVertices);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 31);
+	glVertexPointer(3, GL_FLOAT, 0, rightleafVertices);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 11);
+}
+
+void drawSun(GLfloat x, GLfloat y, GLfloat radius) {
+	int i;
+	int triangleAmount = 20; //# of triangles used to draw circle
+
+							 //GLfloat radius = 0.8f; //radius
+	GLfloat twicePi = 2.0f * 3.141592;
+
+	glColor3f(1.0f,1.0f,1.0f);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(x, y, 0); // center of circle
+
+	glColor3f(1.0f, 1.0f, 0.0f);
+	for (i = 0; i <= triangleAmount; i++) {
+		glVertex3f(
+			x + (radius * cos(i *  twicePi / triangleAmount)),
+			y + (radius * sin(i * twicePi / triangleAmount)),
+			0
+			);
+	}
+	glEnd();
+}
+
+int main(void)
+{
+	GLFWwindow *window;
+
+	// Initialize the library
+	if (!glfwInit())
+	{
+		return -1;
+	}
+
+	// Create a windowed mode window and its OpenGL context
+	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World", NULL, NULL);
+
+	if (!window)
+	{
+		glfwTerminate();
+		return -1;
+	}
+
+	// Make the window's context current
+	glfwMakeContextCurrent(window);
+
+	glViewport(0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT); // specifies the part of the window to which OpenGL will draw (in pixels), convert from normalised to pixels
+	glMatrixMode(GL_PROJECTION); // projection matrix defines the properties of the camera that views the objects in the world coordinate frame. Here you typically set the zoom factor, aspect ratio and the near and far clipping planes
+	glLoadIdentity(); // replace the current matrix with the identity matrix and starts us a fresh because matrix transforms such as glOrpho and glRotate cumulate, basically puts us at (0, 0, 0)
+	glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1); // essentially set coordinate system
+	glMatrixMode(GL_MODELVIEW); // (default matrix mode) modelview matrix defines how your objects are transformed (meaning translation, rotation and scaling) in your world
+	glLoadIdentity(); // same as above comment
+
+	 
+
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	// Loop until the user closes the window
@@ -139,16 +194,11 @@ int main(void)
 
 		// render OpenGL here
 		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 0, mountainVertices);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 20);
-		glVertexPointer(3, GL_FLOAT, 0, roadVertices);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
-		glVertexPointer(3, GL_FLOAT, 0, woodVertices);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 13);
-		glVertexPointer(3, GL_FLOAT, 0, leftleafVertices);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 31);
-		glVertexPointer(3, GL_FLOAT, 0, rightleafVertices);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 11);
+		drawSun(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 100);
+		drawWood();
+		drawRoad();
+		drawMountain();
+		drawLeaf();
 		glDisableClientState(GL_VERTEX_ARRAY);
 
 		// Swap front and back buffers
