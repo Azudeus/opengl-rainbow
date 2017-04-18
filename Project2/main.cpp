@@ -41,12 +41,13 @@ void drawRoad() {
 
 	GLfloat roadVertices[] =
 	{
-		320, 200, 0,
-		200, 0, 0,
+		325, 200, 0,
+		315,200,0,
 		340, 0, 0,
+		200, 0, 0,
 	};
 	glVertexPointer(3, GL_FLOAT, 0, roadVertices);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 }
 
@@ -153,6 +154,19 @@ void drawSun(GLfloat x, GLfloat y, GLfloat radius) {
 	glEnd();
 }
 
+void drawPlane() {
+	glBegin(GL_QUADS);
+	//red color
+	glColor3f(1,1,0.796875f);
+	glVertex3f(0,200,0);
+	glVertex3f(640,200,0);
+	//blue color
+	glColor3f(1,1,0.3984375f);
+	glVertex3f(640,0,0);
+	glVertex3f(0,0,0);
+	glEnd();
+}
+
 int main(void)
 {
 	GLFWwindow *window;
@@ -195,6 +209,7 @@ int main(void)
 		// render OpenGL here
 		glEnableClientState(GL_VERTEX_ARRAY);
 		drawSun(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 100);
+		drawPlane();
 		drawWood();
 		drawRoad();
 		drawMountain();
