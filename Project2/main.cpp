@@ -4,32 +4,6 @@
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
-GLfloat[] drawMountain() {
-	return
-	{
-		0, 200, 0,
-		106, 320, 0,
-		160, 200, 0,
-		148, 340, 0,
-		160, 345, 0,
-		160, 200, 0,
-		172, 340, 0,
-		212, 320, 0,
-		160, 200, 0,
-		320, 200, 0,
-		320, 200, 0,
-		426, 320, 0,
-		480, 200, 0,
-		468, 340, 0,
-		480, 345, 0,
-		480, 200, 0,
-		492, 340, 0,
-		532, 320, 0,
-		480, 200, 0,
-		640, 200, 0,
-	};
-}
-
 int main(void)
 {
 	GLFWwindow *window;
@@ -59,8 +33,29 @@ int main(void)
 	glMatrixMode(GL_MODELVIEW); // (default matrix mode) modelview matrix defines how your objects are transformed (meaning translation, rotation and scaling) in your world
 	glLoadIdentity(); // same as above comment
 
-	GLfloat polygonVertices[] = drawMountain();
-
+	GLfloat polygonVertices[] =
+	{
+		0, 200, 0,
+		106, 320, 0,
+		160, 200, 0,
+		148, 340, 0,
+		160, 345, 0,
+		160, 200, 0,
+		172, 340, 0,
+		212, 320, 0,
+		160, 200, 0,
+		320, 200, 0,
+		320, 200, 0,
+		426, 320, 0,
+		480, 200, 0,
+		468, 340, 0,
+		480, 345, 0,
+		480, 200, 0,
+		492, 340, 0,
+		532, 320, 0,
+		480, 200, 0,
+		640, 200, 0,
+	};
 	GLfloat polygonVertices2[] =
 	{
 		0, 0, 0,
