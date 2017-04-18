@@ -48,7 +48,6 @@ void drawRoad() {
 	};
 	glVertexPointer(3, GL_FLOAT, 0, roadVertices);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
 }
 
 void drawWood() {
@@ -154,6 +153,54 @@ void drawSun(GLfloat x, GLfloat y, GLfloat radius) {
 	glEnd();
 }
 
+void drawRainbow(GLfloat x, GLfloat y, GLfloat radius, GLfloat width) {
+	int i;
+	int triangleAmount = 40; //# of triangles used to draw circle
+
+							 //GLfloat radius = 0.8f; //radius
+	GLfloat twicePi = 2.0f * 3.141592;
+
+
+
+	for (int j = 5; j >= 0; j--) {
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glBegin(GL_TRIANGLE_FAN);
+		glVertex3f(x, y, 0); // center of circle
+
+		switch (j) {
+		case(0) : glColor3f(1.0f, 0.0f, 1.0f); break;
+		case(1) : glColor3f(0.0f, 0.0f, 1.0f); break;
+		case(2) : glColor3f(0.0f, 1.0f, 1.0f); break;
+		case(3) : glColor3f(0.0f, 1.0f, 0.0f); break;
+		case(4) : glColor3f(1.0f, 1.0f, 0.0f); break;
+		case(5) : glColor3f(1.0f, 0.0f, 0.0f); break;
+		}
+
+		for (i = 0; i <= triangleAmount; i++) {
+			glVertex3f(
+				x + ((radius - (6 - j)*(width / 6)) * cos(i *  twicePi / triangleAmount)),
+				y + ((radius - (6 - j)*(width / 6)) * sin(i * twicePi / triangleAmount)),
+				0
+				);
+		}
+		glEnd();
+	}
+
+	glColor3f(0,0,0);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(x, y, 0); // center of circle
+
+	for (i = 0; i <= triangleAmount; i++) {
+		glVertex3f(
+			x + ((radius-width) * cos(i *  twicePi / triangleAmount)),
+			y + ((radius-width) * sin(i * twicePi / triangleAmount)),
+			0
+			);
+	}
+	glEnd();
+
+}
+
 void drawPlane() {
 	glBegin(GL_QUADS);
 	//red color
@@ -166,6 +213,8 @@ void drawPlane() {
 	glVertex3f(0,0,0);
 	glEnd();
 }
+
+
 
 int main(void)
 {
@@ -208,7 +257,8 @@ int main(void)
 
 		// render OpenGL here
 		glEnableClientState(GL_VERTEX_ARRAY);
-		drawSun(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 100);
+		drawRainbow(320, 240, 200, 30);
+		drawSun(320, 240, 100);
 		drawPlane();
 		drawWood();
 		drawRoad();
