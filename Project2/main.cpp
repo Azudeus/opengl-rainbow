@@ -6,7 +6,8 @@
 #define SCREEN_HEIGHT 480
 
 void drawMountain() {
-	glColor3f(0, 0.796875f, 0.59765625f);
+//	glColor3f(0, 0.796875f, 0.59765625f);
+	glColor3f(0.6f, 0.2f, 0);
 
 	GLfloat mountainVertices[] =
 	{
@@ -186,11 +187,11 @@ void drawRainbow(GLfloat x, GLfloat y, GLfloat radius, GLfloat width) {
 		glEnd();
 	}
 
-	glColor3f(0,0,0);
+	glColor3f(0, 0, 0);
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3f(x, y, 0); // center of circle
-
 	for (i = 0; i <= triangleAmount; i++) {
+		glColor3f(0.4, 1, 1);
 		glVertex3f(
 			x + ((radius-width) * cos(i *  twicePi / triangleAmount)),
 			y + ((radius-width) * sin(i * twicePi / triangleAmount)),
@@ -198,7 +199,19 @@ void drawRainbow(GLfloat x, GLfloat y, GLfloat radius, GLfloat width) {
 			);
 	}
 	glEnd();
+}
 
+void drawSky() {
+	glColor3f(1, 1, 1);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex3f(320, 240, 0); // center of circle
+	glColor3f(0.4, 1, 1);
+	glVertex3f(0, 200, 0);
+	glVertex3f(0, 480, 0);
+	glVertex3f(640, 480, 0);
+	glVertex3f(640, 200, 0);
+
+	glEnd();
 }
 
 void drawPlane() {
@@ -257,6 +270,7 @@ int main(void)
 
 		// render OpenGL here
 		glEnableClientState(GL_VERTEX_ARRAY);
+		drawSky();
 		drawRainbow(320, 240, 200, 30);
 		drawSun(320, 240, 100);
 		drawPlane();
